@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Cadastrar Cliente";
+}
+@section scripts{
+    <script>
+        var urlPost = '@Url.Action("Incluir", "Cliente", new { area = "" })';
+        $(document).ready(function () {
+            $('#CPF').mask('000.000.000-00', { reverse: true });
+
+            $('#CEP').mask('00000-000', { reverse: true });
+
+            var telefoneMasks = ['(00) 0000-0000#', '(00) 0-0000-0000'];
+            $('#Telefone').mask(telefoneMasks[0]);
+            $('#Telefone').keyup(function () {
+                var mask = ($(this).cleanVal().length <= 10) ? telefoneMasks[0] : telefoneMasks[1];
+                $('#Telefone').mask(mask);
+            });
+
+            $('#CPFBeneficiario').mask('000.000.000-00', { reverse: true });
+        });
+    </script>
+    @Scripts.Render("~/bundles/clientes")
+}
+<h2>@Html.Raw(ViewBag.Title)</h2>
+@Html.Partial("Forms")

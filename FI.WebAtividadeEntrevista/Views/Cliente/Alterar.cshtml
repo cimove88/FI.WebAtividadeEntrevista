@@ -1,0 +1,29 @@
+﻿@model WebAtividadeEntrevista.Models.ClienteModel
+@{
+    ViewBag.Title = "Alterar Cliente";
+}
+@section scripts{
+<script>
+    var urlPost = '@Url.Action("Alterar", "Cliente", new { area = "" })';
+    var obj = @Html.Raw(Json.Encode(Model));
+    var urlRetorno = '@Url.Action("Index", "Cliente", new { area = "" })';
+
+    $(document).ready(function () {
+        $('#CPF').mask('000.000.000-00', { reverse: true });
+
+        $('#CEP').mask('00000-000', { reverse: true });
+
+        var telefoneMasks = ['(00) 0000-0000#', '(00) 0-0000-0000'];
+        var telefoneOnChange = function () {
+            var mask = ($(this).cleanVal().length <= 10) ? telefoneMasks[0] : telefoneMasks[1];
+            $('#Telefone').mask(mask);
+        }
+        $('#Telefone').mask(telefoneMasks[0]);
+        $('#Telefone').keyup(telefoneOnChange);
+        $('#Telefone').change(telefoneOnChange);
+    });
+</script>
+    @Scripts.Render("~/bundles/altClientes")
+}
+<h2>@Html.Raw(ViewBag.Title)</h2>
+@Html.Partial("Forms")
